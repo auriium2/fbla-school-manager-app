@@ -14,6 +14,7 @@ use crate::students::{StudentRecord, StudentsCommand, StudentsResponse};
 
 pub struct StudentsLogic {
     pub(crate) con: SqliteConnection
+
 }
 
 #[derive(Queryable)]
@@ -34,50 +35,13 @@ impl ChannelLogic<StudentsCommand, StudentsResponse> for StudentsLogic {
 
             match cmd {
                 StudentsCommand::GetAll => {
-                    let s = crate::schema::students::dsl::students.load::<DBRecord>(&mut self.con).expect("TODO: panic message");
 
-
-                    let mut responses: Vec<StudentRecord> = vec![];
-
-
-
-                    for record in s {
-                        responses.push(StudentRecord {
-                            id: record.id as isize,
-                            name: record.name,
-                            grade: record.grade as isize,
-                            points: 0,
-                        });
-                    }
 
                 }
 
 
                 StudentsCommand::Update(_, _, _) => {}
                 StudentsCommand::New(nam, grad) => {
-                    let eqs = grade.eq(grad as i32);
-                    let nam = name.eq(nam);
-                    let lah = (eqs, nam);
-
-                    let connec = &mut self.con;
-
-                    let res = diesel::insert_into(students)
-                        .values(lah)
-                        .execute(&mut self.con);
-
-                    let last_id = sql_function!("fn SELECT last_insert_rowid()");
-
-
-
-
-
-                    diesel::select(last_id).execute(&mut self.con).expect("TODO: panic message");
-
-                    if res.is_err() {
-                        tx.send(StudentsResponse::AddStudentsFailure()).expect("bad send");
-                    } else {
-                        tx.send(StudentsResponse::AddStudentSuccess())
-                    }
 
 
                 }
