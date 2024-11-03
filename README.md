@@ -1,2 +1,2 @@
 # fbla-school-manager-app
-- [TODO] clean this up for job applications
+A school management application built in Rust, using SQL to manage user records. Unfinished, written for the 2024 FBLA competition.
